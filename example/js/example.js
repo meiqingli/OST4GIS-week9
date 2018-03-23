@@ -6,7 +6,7 @@ var crimeFilters;
 var hexGrid;
 var mappedGrid;
 
-var baseHexStyle = { stroke: false }
+var baseHexStyle = { stroke: false };
 
 /* =====================
   Map Setup
@@ -100,4 +100,3 @@ $.ajax('https://raw.githubusercontent.com/CPLN-692-401/datasets/master/geojson/p
     }).addTo(map);
   });
 });
-
