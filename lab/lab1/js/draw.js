@@ -87,10 +87,13 @@ map.addControl(drawControl);
 
 // Event which is run every time Leaflet draw creates a new layer
 map.on('draw:created', function (e) {
+    $('#shapes').empty();
     var type = e.layerType; // The type of shape
     var layer = e.layer; // The Leaflet layer for the shape
     var id = L.stamp(layer); // The unique Leaflet ID for the layer
     if (myRectangle != ""){map.removeLayer(myRectangle);}
     map.addLayer(layer);
     myRectangle = layer;
+    $('#shapes').append("Current ID: <span id='current_id'> id </span>");
+    $('#current_id').text(id);
 });
