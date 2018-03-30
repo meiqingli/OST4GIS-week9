@@ -51,6 +51,10 @@ The docs: https://www.mapbox.com/api-documentation/#geocoding
 (For this first task, the URL pattern you'll want to produce looks like this:
 `https://api.mapbox.com/geocoding/v5/mapbox.places/{geocode_this}.json?access_token={your_mapbox_token}`)
 
+My token:
+pk.eyJ1Ijoic3RyYXdwbHVtIiwiYSI6ImNqZjRkOW5jbjBrcXkzM3FoNzJocG9rYmcifQ.yvbCsSYVr8hqNsUSFzqAOg
+https://api.mapbox.com/geocoding/v5/mapbox.places/San Francisco.json?access_token=pk.eyJ1Ijoic3RyYXdwbHVtIiwiYSI6ImNqZjRkOW5jbjBrcXkzM3FoNzJocG9rYmcifQ.yvbCsSYVr8hqNsUSFzqAOg
+
 You might note that this task is slightly underspecified: there are multiple different
 ways to transform text into an address. For the lab, the simplest form of geocoding
 (i.e. without any further options being specified) is entirely appropriate. More complex
@@ -72,6 +76,8 @@ Task 2: Use Mapbox's 'directions' API to generate a route based on your origin a
 
 The docs: https://www.mapbox.com/api-documentation/#directions
 (No example url provide, try to figure it out using the docs)
+
+https://api.mapbox.com/directions/v5/mapbox/driving/13.4301,52.5109;13.4265,52.5080;13.4194,52.5072?geometries=polyline&access_token=pk.eyJ1Ijoic3RyYXdwbHVtIiwiYSI6ImNqZjRkOW5jbjBrcXkzM3FoNzJocG9rYmcifQ.yvbCsSYVr8hqNsUSFzqAOg
 
 Again, the task is somewhat underspecified. Let's start with the simplest routing
 option available. Once you're getting a valid (as best you can tell) response
@@ -126,7 +132,7 @@ var state = {
 };
 
 /* We'll use underscore's `once` function to make sure this only happens
- *  one time even if weupdate the position later
+ *  one time even if we update the position later
  */
 var goToOrigin = _.once(function(lat, lng) {
   map.flyTo([lat, lng], 14);
@@ -170,8 +176,10 @@ $(document).ready(function() {
   $("#calculate").click(function(e) {
     var dest = $('#dest').val();
     console.log(dest);
+    myToken = "pk.eyJ1Ijoic3RyYXdwbHVtIiwiYSI6ImNqZjRkOW5jbjBrcXkzM3FoNzJocG9rYmcifQ.yvbCsSYVr8hqNsUSFzqAOg";
+    var url = "https://api.mapbox.com/geocoding/v5/mapbox.places/" + dest + ".json?access_token=" + myToken;
+    console.log(url);
+    
   });
 
 });
-
-
