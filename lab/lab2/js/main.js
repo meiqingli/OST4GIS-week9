@@ -179,7 +179,13 @@ $(document).ready(function() {
     myToken = "pk.eyJ1Ijoic3RyYXdwbHVtIiwiYSI6ImNqZjRkOW5jbjBrcXkzM3FoNzJocG9rYmcifQ.yvbCsSYVr8hqNsUSFzqAOg";
     var url = "https://api.mapbox.com/geocoding/v5/mapbox.places/" + dest + ".json?access_token=" + myToken;
     console.log(url);
-    
+    $.getJSON(url).done(function(destination){
+      // console.log(destination, "destination");
+      _.map(destination.features, function(point){
+        var destinationMarker = L.circleMarker([point.geometry.coordinates[1],point.geometry.coordinates[0]], {color: "red"}).addTo(map);
+        //var eachDestination = point.geom
+      });
+    });
   });
 
 });
