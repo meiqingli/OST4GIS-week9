@@ -150,11 +150,15 @@ var updatePosition = function(lat, lng, updated) {
   goToOrigin(lat, lng);
 };
 
+var Origin = {"lat": 0, "lng": 0};
+
 $(document).ready(function() {
   /* This 'if' check allows us to safely ask for the user's current position */
   if ("geolocation" in navigator) {
     navigator.geolocation.getCurrentPosition(function(position) {
       updatePosition(position.coords.latitude, position.coords.longitude, position.timestamp);
+      Origin.lng = position.coords.longitude;
+      Origin.lat = position.coords.latitude;
     });
   } else {
     alert("Unable to access geolocation API!");
@@ -183,9 +187,34 @@ $(document).ready(function() {
       // console.log(destination, "destination");
       _.map(destination.features, function(point){
         var destinationMarker = L.circleMarker([point.geometry.coordinates[1],point.geometry.coordinates[0]], {color: "red"}).addTo(map);
-        //var eachDestination = point.geom
+        var eachDestination = point.geometry.coordinates;
+        //console.log(eachDestination);
+        var lng = point.geometry.coordinates[0];
+        var lat = point.geometry.coordinates[1];
+        console.log(eachDestination);
+        var route = "https://api.mapbox.com/directions/v5/mapbox/driving/" + Origin.lng + "," + Origin.lat + ";" + lng + "," + lat + "?access_token=" + myToken;
+        $.ajax({
+          method: 'GET',
+          url:route,
+          }).done(function(data){
+          var eachRoute = decode(data.routes[0].geometry);
+          _.each(eachRoute, function(swap){
+            var temp;
+            temp = swap[0];
+            swap[0] = swap[1];
+            swap[1] = temp;
+          });
+          //console.log(eachRoute);
+          var line = turf.lineString(eachRoute);
+          console.log(line);
+          var myStyle = {
+            "color": "#ff7800",
+            "weight": 3,
+            "opacity": 0.65
+          };
+          L.geoJson(line, {style: myStyle}).addTo(map);
+        });
+      });
       });
     });
   });
-
-});
